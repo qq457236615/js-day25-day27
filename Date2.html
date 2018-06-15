@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html
+	<meta charset="utf-8">
+	<title>Date</title>
+<body>
+	<time></time><br>
+	<time></time>
+	<script>
+	setPageTime();
+	function setPageTime(){
+		var timeEle = document.getElementsByTagName("time");
+		setInterval(function(){
+			timeEle[0].innerHTML = getTime(1);
+			timeEle[1].innerHTML = getTime(2);
+		}, 500);
+	}
+	
+	function getTime(flag){
+		var date = new Date();
+		var time = {};
+		time.year = date.getFullYear();
+		time.month = fillDigit(date.getMonth());
+		time.day = fillDigit(date.getDate());
+		time.week = date.getDay();
+		time.hour = fillDigit(date.getHours());
+		time.minute = fillDigit(date.getMinutes());
+		time.second = fillDigit(date.getSeconds());
+		return transFormat(time, flag, date);
+		
+	}
+	
+	function transFormat(time, flag, date){
+		switch (flag) {
+			case 1: {
+				time.hour = fillDigit(time.hour % 12);
+				time.week = transWeek(time.week, 1);
+				return time.year + "-" + time.month + "-" + time.day
+		             + " " + time.week + " " + time.hour + ":"
+			         + time.minute + ":" + time.second + " " + (date.getHours() >= 12 ? "PM" : "AM");
+			};
+			case 2: {
+				time.week = transWeek(time.week, 2);
+				return time.year + "年" + time.month + "月" + time.day
+					+ "日 星期" + time.week + " " + time.hour + ":"
+					+ time.minute + ":" + time.second;
+			};
+			default: break;
+		}
+	}
+	
+	function transWeek(num, flag){
+		var week1 = [
+		        "Monday",
+				"Tuesday",
+				"Wednesday",
+				"Thursday",
+				"Friday",
+				"Saturday",
+				"Sunday"
+		    ]
+		var week2 = [
+				"一",
+				"二",
+				"三",
+				"四",
+				"五",
+				"六",
+				"日"
+			]
+		switch (flag) {
+			case 1: {
+				return week1[num - 1];
+			};
+			case 2: {
+				return week2[num - 1]
+			};
+			default: break;
+		}
+	}
+	
+	function fillDigit(num){
+		if (num < 10) {
+			num = "0" + num;
+		}
+		return num;
+	}
+	</script>
+</body>
+</html>

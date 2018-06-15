@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html
+	<meta charset="utf-8" />
+	<title>Date</title>
+<body>
+	<time></time>
+	<script>
+	setPageTime();
+	function setPageTime(){
+		var timeEle = document.getElementsByTagName("time")[0];
+		setInterval(function(){
+			timeEle.innerHTML = getTime();
+		}, 500);
+	}
+	
+	function getTime(){
+		var date = new Date();
+		var time = {};
+		time.year = date.getFullYear();
+		time.month = fillDigit(date.getMonth());
+		time.day = fillDigit(date.getDate());
+		time.week = transWeek(date.getDay());
+		time.hour = fillDigit(date.getHours());
+		time.minute = fillDigit(date.getMinutes());
+		time.second = fillDigit(date.getSeconds());
+		return time.year + "年" + time.month + "月" + time.day
+		     + "日 星期" + time.week + " " + time.hour + ":"
+			 + time.minute + ":" + time.second;
+	}
+	
+	function transWeek(num){
+		var week = [
+		        "一",
+				"二",
+				"三",
+				"四",
+				"五",
+				"六",
+				"日"
+		    ]
+		return week[num - 1];
+	}
+	
+	function fillDigit(num){
+		if (num < 10) {
+			num = "0" + num;
+		}
+		return num;
+	}
+	</script>
+</body>
+</html>
